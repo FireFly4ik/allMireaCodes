@@ -1,0 +1,16 @@
+.DS_Store
+.idea/.DS_Store
+.idea/.gitignore
+.idea/Codes.iml
+.idea/Codes2.iml
+.idea/editor.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+build/CMakeFiles/clion-Debug-log.txt
+cmake-build-release/CMakeFiles/clion-Release-log.txt
+Элитка/.DS_Store
