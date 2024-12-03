@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
+#include <fstream>
 using namespace std;
 
 class Node{
@@ -88,81 +88,129 @@ private:
     }
 };
 
-int main(){
-    Hash_table hash(128);
-    while (true){
-        int operation;
-        cout << "\nКакую операцию вы хотите сделать?\n1) Добавить ключ-значений в таблицу\n2) Найти значение по ключу\n3) Удалить ключ-значение\nНапишите цифру операции: ";
-        cin >> operation;
-        if (operation == 1)
-        {
-            int typeOfData;
-            string value;
-            cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
-            cin >> typeOfData;
-            cout << "Введите ключ: ";
-            if (typeOfData == 1){
-                int key;
-                cin >> key;
-                cout << "Введите значение: ";
-                while(value.length() == 0){
-                    getline(cin, value);
+void chistka(string &line){
+    while (line.find("\"") != string::npos){
+        int x = line.find("\"");
+        line.erase(x, 1);
+    }
+    while (line.find("\\") != string::npos){
+        int x = line.find("\\");
+        line.erase(x, 1);
+    }
+}
+
+void sozd(Hash_table &hash){
+    string line;
+    ifstream text("contactBook.json");
+    int i = 0;
+    if (text.is_open()){
+        while (getline(text, line)){
+            string key;
+            if(line.find("\": ") != string::npos and line.find("[") == string::npos){
+                int start = line.find("\": ") + 3;
+                while(start != line.length() - 1 and line[start] != ','){
+                    key += line[start];
+                    start ++;
                 }
-                hash.set(to_string(key), value);
-            } else if (typeOfData == 2) {
-                string keyString;
-                while(keyString.length() == 0){
-                    getline(cin, keyString);
+                chistka(key);
+                getline(text, line);
+                string value;
+                start = line.find("\": ") + 4;
+                while(start != line.length() - 1){
+                    value += line[start];
+                    start ++;
                 }
-                cout << "Введите значение: ";
-                while(value.length() == 0){
-                    getline(cin, value);
-                }
-                hash.set(keyString, value);
-            }
-        } else if (operation == 2) {
-            int typeOfData;
-            cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
-            cin >> typeOfData;
-            if (typeOfData == 1){
-                int key;
-                cout << "Введите ключ: ";
-                cin >> key;
-                hash.get(to_string(key));
-            } else if (typeOfData == 2) {
-                string keyString;
-                cout << "Введите ключ: ";
-                while(keyString.length() == 0){
-                    getline(cin, keyString);
-                }
-                hash.get(keyString);
-            }
-        } else if (operation == 3) {
-            int typeOfData;
-            string value;
-            cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
-            cin >> typeOfData;
-            cout << "Введите ключ: ";
-            if (typeOfData == 1){
-                int key;
-                cin >> key;
-                cout << "Введите значение: ";
-                while(value.length() == 0){
-                    getline(cin, value);
-                }
-                hash.deleteKZ(to_string(key), value);
-            } else if (typeOfData == 2) {
-                string keyString;
-                while(keyString.length() == 0){
-                    getline(cin, keyString);
-                }
-                cout << "Введите значение: ";
-                while(value.length() == 0){
-                    getline(cin, value);
-                }
-                hash.deleteKZ(keyString, value);
+                hash.set(key, value);
             }
         }
+    }
+}
+
+void operation(Hash_table &hash){
+    int operation;
+    cout << "\nКакую операцию вы хотите сделать?\n1) Добавить ключ-значений в таблицу\n2) Найти значение по ключу\n3) Удалить ключ-значение\nНапишите цифру операции: ";
+    cin >> operation;
+    if (operation == 1)
+    {
+        int typeOfData;
+        string value;
+        cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
+        cin >> typeOfData;
+        cout << "Введите ключ: ";
+        if (typeOfData == 1){
+            int key;
+            cin >> key;
+            cout << "Введите значение: ";
+            while(value.length() == 0){
+                getline(cin, value);
+            }
+            hash.set(to_string(key), value);
+        } else if (typeOfData == 2) {
+            string keyString;
+            while(keyString.length() == 0){
+                getline(cin, keyString);
+            }
+            cout << "Введите значение: ";
+            while(value.length() == 0){
+                getline(cin, value);
+            }
+            hash.set(keyString, value);
+        }
+    } else if (operation == 2) {
+        int typeOfData;
+        cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
+        cin >> typeOfData;
+        if (typeOfData == 1){
+            int key;
+            cout << "Введите ключ: ";
+            cin >> key;
+            hash.get(to_string(key));
+        } else if (typeOfData == 2) {
+            string keyString;
+            cout << "Введите ключ: ";
+            while(keyString.length() == 0){
+                getline(cin, keyString);
+            }
+            hash.get(keyString);
+        }
+    } else if (operation == 3) {
+        int typeOfData;
+        string value;
+        cout << "Какого типа будет ключ?\n1) Int\n2) String\nНапишите цифру типа данных: ";
+        cin >> typeOfData;
+        cout << "Введите ключ: ";
+        if (typeOfData == 1){
+            int key;
+            cin >> key;
+            cout << "Введите значение: ";
+            while(value.length() == 0){
+                getline(cin, value);
+            }
+            hash.deleteKZ(to_string(key), value);
+        } else if (typeOfData == 2) {
+            string keyString;
+            while(keyString.length() == 0){
+                getline(cin, keyString);
+            }
+            cout << "Введите значение: ";
+            while(value.length() == 0){
+                getline(cin, value);
+            }
+            hash.deleteKZ(keyString, value);
+        }
+    }
+}
+
+int main(){
+    Hash_table hash(128);
+    int table;
+    cout << "С какой таблицей будет работа?\n1) Работать с пустой таблицей\n2) Создать из JSON-файла\nНапишите цифру: ";
+    cin >> table;
+    if (table == 2){
+        sozd(hash);
+    }
+    while (true){
+        operation(hash);
     }
     return 0;
 }

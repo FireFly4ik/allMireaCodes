@@ -2,7 +2,7 @@
 #include <array>
 using namespace std;
 
-/*int binar(int *arr,int x){
+int binar(int *arr,int x){
     int l(0);
     int r(sizeof(arr) - 2);
     while (l <= r){
@@ -22,7 +22,7 @@ using namespace std;
         }
     }
     return 0;
-} */
+}
 
 int main(){
     int values[]{1,2,3,5,6,7};

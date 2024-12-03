@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-void show_vector(vector<int>&a)
+void pokazatVector(vector<int>&a)
 {
     for (vector<int>::iterator it = a.begin() ; it!=a.end() ; ++it){
         cout << *it << " ";
@@ -10,30 +10,26 @@ void show_vector(vector<int>&a)
     cout << endl;
 }
 
-int main(){
-    vector<int> massiv;
-    int x, k;
-    while (x != -1){
-        cout << "Введите положительный инт для вноса в массив или -1 для начала сортировки" << endl;
-        cin >> x;
-        if (x == -1){
-            break;
-        }
-        massiv.push_back(x);
-    }
+void sortirovka(vector<int> &vec){
+    int k;
     while (true){
-        if (k == massiv.size() - 1){
+        if (k == vec.size() - 1){
             break;
         }
         k = 0;
-        for (int i = 0; i < massiv.size() - 1; i++){
-            if (massiv[i] > massiv[i + 1]){
-                swap(massiv[i], massiv[i + 1]);
+        for (int i = 0; i < vec.size() - 1; i++){
+            if (vec[i] > vec[i + 1]){
+                swap(vec[i], vec[i + 1]);
             } else {
                 k++;
             }
         }
     } 
-    show_vector(massiv);
+}
+
+int main(){
+    vector<int> obrazec1 = {31,32,9,44,24,50,27,34,42,29,4,20,26,18,5,21,48,16,35,41,40,17,38,10,45,14,25,6,3,13,22,46,47,8,23,7,15,39,2,37,1,19,28,49,43,30,12,11,36,33};
+    sortirovka(obrazec1);
+    pokazatVector(obrazec1);
     return 0;
 }
