@@ -81,6 +81,15 @@ public:
         return this;
     }
 
+    Node* accessToNext(){
+        if (nextNodeAlive){
+            return nextNode;
+        } else {
+            cout << "Нет следующего элемента списка" << endl;
+            return this;
+        }
+    }
+
 private:
     int chislo = NULL;
     bool alive = false;
